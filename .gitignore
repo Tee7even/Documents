@@ -1,0 +1,9 @@
+# Default ignored files
+/shelf/
+
+# IntelliJ project folder
+/.idea/
+/*.iml
+
+# Compiler output
+/target/
