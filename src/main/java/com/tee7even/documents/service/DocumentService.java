@@ -1,10 +1,10 @@
 package com.tee7even.documents.service;
 
-import com.tee7even.documents.dto.DocumentIdDto;
-import com.tee7even.documents.dto.DocumentInputDto;
-import com.tee7even.documents.dto.DocumentTreeNodeDto;
-import com.tee7even.documents.dto.mapper.DocumentInputMapper;
-import com.tee7even.documents.dto.mapper.DocumentTreeNodeMapper;
+import com.tee7even.documents.exception.ParentNodeNotFoundException;
+import com.tee7even.documents.service.dto.DocumentInputDto;
+import com.tee7even.documents.service.dto.DocumentTreeNodeDto;
+import com.tee7even.documents.service.dto.mapper.DocumentInputMapper;
+import com.tee7even.documents.service.dto.mapper.DocumentTreeNodeMapper;
 import com.tee7even.documents.entity.DocumentTreeNode;
 import com.tee7even.documents.repository.DocumentTreeNodeRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,10 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DocumentTreeNodeService {
+public class DocumentService {
 
     private final DocumentTreeNodeRepository repository;
+
     private final DocumentTreeNodeMapper nodeMapper;
     private final DocumentInputMapper inputMapper;
 
@@ -43,8 +44,8 @@ public class DocumentTreeNodeService {
         return Optional.ofNullable(dtoMap.get(id));
     }
 
-    public DocumentIdDto addNewDocument(DocumentInputDto inputDto) {
+    public Long addNewDocument(DocumentInputDto inputDto) throws ParentNodeNotFoundException {
         DocumentTreeNode node = repository.save(inputMapper.toEntity(inputDto));
-        return new DocumentIdDto(node.getId());
+        return node.getId();
     }
 }

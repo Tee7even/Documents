@@ -1,4 +1,4 @@
-package com.tee7even.documents.dto;
+package com.tee7even.documents.service.dto;
 
 import lombok.Data;
 

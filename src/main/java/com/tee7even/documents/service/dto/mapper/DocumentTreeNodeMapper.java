@@ -1,6 +1,6 @@
-package com.tee7even.documents.dto.mapper;
+package com.tee7even.documents.service.dto.mapper;
 
-import com.tee7even.documents.dto.DocumentTreeNodeDto;
+import com.tee7even.documents.service.dto.DocumentTreeNodeDto;
 import com.tee7even.documents.entity.DocumentTreeNode;
 import org.springframework.stereotype.Component;
 

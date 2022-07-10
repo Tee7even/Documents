@@ -1,10 +1,9 @@
 package com.tee7even.documents.controller;
 
-import com.tee7even.documents.dto.DocumentIdDto;
-import com.tee7even.documents.dto.DocumentInputDto;
-import com.tee7even.documents.dto.DocumentTreeNodeDto;
+import com.tee7even.documents.service.dto.DocumentInputDto;
+import com.tee7even.documents.service.dto.DocumentTreeNodeDto;
 import com.tee7even.documents.exception.ParentNodeNotFoundException;
-import com.tee7even.documents.service.DocumentTreeNodeService;
+import com.tee7even.documents.service.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,21 +23,24 @@ public class DocumentsController {
 
     private static final Logger logger = LoggerFactory.getLogger(DocumentsController.class);
 
-    private final DocumentTreeNodeService service;
+    private final DocumentService service;
 
     @GetMapping("/{id}/tree")
-    public DocumentTreeNodeDto getTreeByRootId(@PathVariable Long id) {
-        logger.info("getTreeRootById(id={})", id);
+    public DocumentTreeNodeDto getDocumentTreeByRootId(@PathVariable Long id) {
+        logger.info("getDocumentTreeByRootId(id={})", id);
         return service.getTreeByRootId(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/")
-    public DocumentIdDto addNewDocument(@RequestBody DocumentInputDto inputDto) {
-        logger.info("addNewDocument(inputDto={})", inputDto);
+    public DocumentIdResponse postNewDocument(@RequestBody DocumentInputDto inputDto) {
+        logger.info("postNewDocument(inputDto={})", inputDto);
         try {
-            return service.addNewDocument(inputDto);
+            Long documentId = service.addNewDocument(inputDto);
+            return new DocumentIdResponse(documentId);
         } catch (ParentNodeNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
+
+    public record DocumentIdResponse(long id) { }
 }
