@@ -17,7 +17,8 @@ public class DocumentInputMapper {
         return DocumentTreeNode.builder()
             .name(dto.getName())
             .content(dto.getContent())
-            .parent(repository.findById(dto.getParentId()).orElseThrow(ParentNodeNotFoundException::new))
+            .parent(dto.getParentId() == null ? null
+                : repository.findById(dto.getParentId()).orElseThrow(ParentNodeNotFoundException::new))
             .build();
     }
 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 public class DocumentInputDto implements Serializable {
 
-    @NonNull private final Long parentId;
+    private final Long parentId;
     @NonNull private final String name;
     @NonNull private final String content;
 }
