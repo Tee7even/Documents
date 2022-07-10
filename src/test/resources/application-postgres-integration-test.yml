@@ -1,0 +1,10 @@
+# This profile is used for integration testing with PostgreSQL to test postgres-specific features (recursive CTEs)
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/documents-test"
+    username: "postgres"
+    password: "postgres"
+  sql.init.mode: "always"
+  jpa:
+    show-sql: "true"
+    defer-datasource-initialization: "true"

@@ -1,0 +1,4 @@
+# HSQLDB doesn't do so well with the postgres TEXT data type, even with pgs syntax option
+spring:
+  sql.init.mode: "never"
+  jpa.hibernate.ddl-auto: "none"
